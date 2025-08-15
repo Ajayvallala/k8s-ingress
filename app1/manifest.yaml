@@ -14,7 +14,7 @@ spec:
   spec:
    containers:
    - name: app-1
-     image: ajayvallala/app1:v1
+     image: ajayvallala/app-1:v1
 
 ---
 
