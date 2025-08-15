@@ -35,32 +35,23 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-wildcard-host
+  name: app1
   annotations:
    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
    alb.ingress.kubernetes.io/frontend-nlb-scheme:  internet-facing
-   alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:448049818055:certificate/68bea515-6649-45f6-be0a-99dd47b84e94
+   alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:448049818055:certificate/c1a18e40-506c-405e-af64-c4d8f17a1752
    alb.ingress.kubernetes.io/target-type: ip
 spec:
   ingressClassName: alb
   rules:
-  - host: "foo.bar.com"
+  - host: "app1.vallalas.store"
     http:
       paths:
       - pathType: Prefix
-        path: "/bar"
+        path: "/"
         backend:
           service:
-            name: service1
+            name: app1-service
             port:
               number: 80
-  - host: "*.foo.com"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/foo"
-        backend:
-          service:
-            name: service2
-            port:
-              number: 80
+
