@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: apps-2
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+   app: app-2
+ template:
+  metadata:
+   labels:
+    app: app-2
+  spec:
+   containers:
+   - name: app-2
+     image: ajayvallala/app-2:v1
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: app2-service
+spec:
+ selector:
+  app: app-2
+ ports:
+ - protocol: TCP
+   port: 80
+   targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app2
+  annotations:
+   alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+   alb.ingress.kubernetes.io/scheme: internet-facing
+   alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:448049818055:certificate/c1a18e40-506c-405e-af64-c4d8f17a1752
+   alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "app2.vallalas.store"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app2-service
+            port:
+              number: 80
+
