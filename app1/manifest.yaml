@@ -41,6 +41,7 @@ metadata:
    alb.ingress.kubernetes.io/scheme: internet-facing
    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:448049818055:certificate/c1a18e40-506c-405e-af64-c4d8f17a1752
    alb.ingress.kubernetes.io/target-type: ip
+   alb.ingress.kubernetes.io/group.name: vallalastore
 spec:
   ingressClassName: alb
   rules:
